@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "code": 200,
+    "message": "ok",
+    "page": 1,
+    "page_size": 1,
+    "has_next_page": true,
+    "number_of_items": 287
+  },
+  "content": [
+    {
+      "symbol": "BTCUSDT",
+      "price": 57029.66
+    }
+  ]
+}
+
+"content": {
+    "symbol": "BTCUSDT",
+    "price_change": -2165.9,
+    "price_change_percent": -3.852,
+    "weighted_avg_price": 55320.90151831,
+    "prev_close_price": 56232.85,
+    "last_price": 54068.03,
+    "bid_price": 54068.02,
+    "ask_price": 54068.03,
+    "open_price": 56233.93,
+    "high_price": 56757.91,
+    "low_price": 53536.02,
+    "volume": 66729.574368,
+    "open_time": "2021-04-20T23:50:26.043000+00:00",
+    "close_time": "2021-04-21T23:50:26.043000+00:00",
+    "count": 2126865
+  }
+
+  "content": [
+      {
+        "symbol": "BTCUSDT",
+        "price": 54079.61
+      },
+
+http://104.248.229.170/api/market?page=1&page_size=10 // without search parameter
+http://104.248.229.170/api/market?search_param=btc&page=1&page_size=10 // with search parameter
