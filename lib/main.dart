@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       // routes: {
       //   MarketListPage.id: (context) => MarketListPage(),
       // },
-      home: MarketList(),
+      home: MarketListPage(),
     );
   }
 }

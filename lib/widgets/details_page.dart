@@ -7,24 +7,6 @@ class DetailsPage extends StatelessWidget {
 
   DetailsPage(this.index);
 
-  final List symbolKeys = [
-    'Symbol',
-    'Price change',
-    'Price change percent',
-    'Weighted average price',
-    'Previous close price',
-    'Last price',
-    'Bid price',
-    'Ask price',
-    'Open price',
-    'High price',
-    'Low price',
-    'Volume',
-    'Open time',
-    'Close time',
-    'Count'
-  ];
-
   changeRowColor(int index) {
     Color color;
     if (index.isEven) {
@@ -39,15 +21,15 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(symbolContent['symbol']),
+        title: Text(symbolContent['Symbol']),
       ),
       body: ListView.builder(
         shrinkWrap: true,
         primary: false,
         itemCount: symbolContent.length,
         itemBuilder: (context, int index) {
-          String value = symbolContent.values.elementAt(index).toString();
-          String key = symbolKeys[index];
+          final value = symbolContent.values.elementAt(index);
+          final key = symbolContent.keys.elementAt(index);
           return symbolListView(key, value, index);
         },
       ),
@@ -72,7 +54,8 @@ class DetailsPage extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: Text(
-                value,
+                value.toString(),
+                textAlign: TextAlign.end,
                 style: TextStyle(fontSize: 16),
               ),
             ),

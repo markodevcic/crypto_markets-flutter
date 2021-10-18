@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:crypto_markets/models/market_model.dart';
 import 'package:crypto_markets/services/api_call.dart';
-import '../../globals.dart';
+import 'package:crypto_markets/globals.dart';
+import '../details_page.dart';
 import 'bottom_loading_indicator.dart';
 
 class MarketsList extends StatefulWidget {
   MarketsList({Key? key}) : super(key: key);
+
+  ApiCall apiCall = ApiCall();
 
   @override
   State<MarketsList> createState() => _MarketsListState();
@@ -18,7 +21,7 @@ class _MarketsListState extends State<MarketsList> {
     return Stack(
       children: [
         FutureBuilder<MarketModel>(
-          // future: ApiCall().fetchMarketData(searchText),
+          future: widget.apiCall.fetchMarketData(searchText),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return NotificationListener<ScrollEndNotification>(
@@ -29,7 +32,7 @@ class _MarketsListState extends State<MarketsList> {
                       print('at the top');
                     } else {
                       if (hasNextPage) {
-                        pageNumber++;
+                        setState(() {});
                       }
                       print('at the bottom');
                     }
@@ -48,16 +51,21 @@ class _MarketsListState extends State<MarketsList> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                           child: ListTile(
+                            onTap: () async {
+                              await widget.apiCall.fetchSymbolContent(index);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailsPage(index)));
+                            },
                             leading: Text('${index + 1}'),
-                            title:
-                                Text(snapshot.data!.content[index]['symbol']),
-                            trailing: Text(snapshot
-                                .data!.content[index]['price']
-                                .toString()),
+                            title: Text(content[index]['symbol']),
+                            trailing: Text(content[index]['price'].toString()),
                           ),
                         );
                       },
-                      itemCount: snapshot.data!.content.length,
+                      itemCount: content.length,
                     ),
                     if (hasNextPage && pageNumber != 1)
                       bottomLoadingIndicator(),
@@ -73,7 +81,7 @@ class _MarketsListState extends State<MarketsList> {
               ),
             );
           },
-        )
+        ),
       ],
     );
   }
