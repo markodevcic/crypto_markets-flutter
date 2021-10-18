@@ -6,6 +6,8 @@ import 'package:crypto_markets/widgets/components/markets_list.dart';
 class MarketListPage extends StatefulWidget {
   MarketListPage({Key? key}) : super(key: key);
 
+  static const String id = 'MarketListPage';
+
   @override
   State<MarketListPage> createState() => _MarketListPageState();
 }

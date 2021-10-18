@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(),
       // routes: {
       //   MarketListPage.id: (context) => MarketListPage(),
+      //   MarketsList.id: (context) => MarketsList(),
+      //   DetailsPage.id: (context) => DetailsPage(tappedIndex),
       // },
       home: MarketListPage(),
     );

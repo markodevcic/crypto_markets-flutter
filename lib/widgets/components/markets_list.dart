@@ -10,7 +10,7 @@ import 'bottom_loading_indicator.dart';
 class MarketsList extends StatefulWidget {
   MarketsList({Key? key}) : super(key: key);
 
-  ApiCall apiCall = ApiCall();
+  final ApiCall apiCall = ApiCall();
 
   @override
   State<MarketsList> createState() => _MarketsListState();

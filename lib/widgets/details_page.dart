@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../globals.dart';
 
 class DetailsPage extends StatelessWidget {
-  int index;
+  final int index;
 
   DetailsPage(this.index);
 
@@ -21,7 +21,16 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(symbolContent['Symbol']),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: true,
+        title: Text(
+          symbolContent['Symbol'],
+        ),
       ),
       body: ListView.builder(
         shrinkWrap: true,
