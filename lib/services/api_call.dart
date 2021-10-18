@@ -7,13 +7,27 @@ import '../constants.dart';
 import '../globals.dart';
 
 class ApiCall {
-  Future<MarketModel> fetchMarketData(searchText) async {
+  Future<MarketModel> searchMethod() {
+    if (searchText.isNotEmpty) {
+      switchApiCall = true;
+      return searchMarketData();
+    } else if (searchText.isEmpty) {
+      if (switchApiCall) {
+        content = [];
+        switchApiCall = false;
+      }
+      return fetchMarketData();
+    }
+    throw Exception('Failed to search Crypto Markets. Try again.');
+  }
+
+  Future<MarketModel> fetchMarketData() async {
     var url = kApiSearchParameter +
         searchText +
         kApiPageNumber +
         pageNumber.toString() +
         '&page_size=30';
-    print(url);
+    print('Fetch market url: $url');
 
     var response = await get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -25,9 +39,27 @@ class ApiCall {
         response.statusCode.toString());
   }
 
-  Future fetchSymbolContent(index) async {
+  Future<MarketModel> searchMarketData() async {
+    var url = kApiSearchParameter +
+        searchText +
+        kApiPageNumber +
+        pageNumber.toString() +
+        '&page_size=30';
+    print('Search market: $url');
+
+    var response = await get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var decodedJson = json.decode(response.body);
+
+      return MarketModel.fromJson(decodedJson);
+    }
+    throw Exception('Failed to search Crypto Markets with status code ' +
+        response.statusCode.toString());
+  }
+
+  Future<SymbolContent> fetchSymbolContent(index) async {
     var symbolUrl = kApi + content[index]['symbol'];
-    print(symbolUrl);
+    print('Symbol url: $symbolUrl');
 
     var symbolResponse = await get(Uri.parse(symbolUrl));
     if (symbolResponse.statusCode == 200) {

@@ -5,31 +5,37 @@ import '../globals.dart';
 class MarketModel {
   late List marketContent;
   late bool nextPage;
-  late int page;
-  late int pageSize;
   late int numberOfItems;
 
   MarketModel(
     this.marketContent,
     this.nextPage,
-    this.page,
-    this.pageSize,
     this.numberOfItems,
   );
 
   MarketModel.fromJson(Map<String, dynamic> json) {
     marketContent = json['content'];
     nextPage = json['meta']['has_next_page'];
-    page = json['meta']['page'];
-    pageSize = json['meta']['page_size'];
     numberOfItems = json['meta']['number_of_items'];
 
+    itemsNumber = numberOfItems;
     hasNextPage = nextPage;
-    if (hasNextPage) pageNumber++;
+    print(itemsNumber);
+    print(pageNumber);
+
+    if (switchApiCall && pageNumber == 1) {
+      content = [];
+    } else if (switchApiCall && itemsNumber < (pageNumber - 1) * 30) {
+      content = [];
+    }
 
     for (var i = 0; i < marketContent.length; i++) {
       content.add(marketContent[i]);
     }
+
+    if (hasNextPage) pageNumber++;
+    isLoading = false;
+    isLoadingDetails = false;
   }
 }
 
@@ -55,5 +61,7 @@ class SymbolContent {
         }
       },
     );
+    isLoading = false;
+    isLoadingDetails = false;
   }
 }

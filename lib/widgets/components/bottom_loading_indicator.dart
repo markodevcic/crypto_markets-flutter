@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 Widget bottomLoadingIndicator() {
   return SizedBox(
@@ -6,11 +7,13 @@ Widget bottomLoadingIndicator() {
     child: Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text(
-            'Loading more...',
-            style: TextStyle(fontSize: 16, color: Colors.white),
-          ),
+        children: [
+          GlowingProgressIndicator(
+            child: Text(
+              'loading more',
+              style: TextStyle(color: Colors.white),
+            ),
+          )
         ],
       ),
     ),

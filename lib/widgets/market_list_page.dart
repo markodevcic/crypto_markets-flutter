@@ -32,8 +32,8 @@ class _MarketListPageState extends State<MarketListPage> {
                       ? showTextFieldIcons = false
                       : showTextFieldIcons = true;
                   pageNumber = 1;
-                  content = [];
                   searchText = value;
+                  isLoading = true;
                   setState(() {});
                 },
                 textAlign: TextAlign.center,
@@ -57,29 +57,19 @@ class _MarketListPageState extends State<MarketListPage> {
                           ),
                           onPressed: () {
                             controller.clear();
-                            showTextFieldIcons = false;
-                            setState(() {});
-                            pageNumber = 1;
+                            isLoading = true;
                             searchText = '';
-                            content = [];
+                            pageNumber = 1;
+                            showTextFieldIcons = false;
+                            FocusManager.instance.primaryFocus!.unfocus();
+                            setState(() {});
                           },
                         )
                       : null,
                   suffixIcon: (showTextFieldIcons)
-                      ? TextButton(
-                          child: const Icon(
-                            Icons.monetization_on,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {},
-                          // onPressed: () {
-                          //   controller.clear();
-                          //   showTextFieldIcons = false;
-                          //   setState(() {});
-                          //   searchText = '';
-                          //   pageNumber = 1;
-                          //   content = [];
-                          // },
+                      ? const Icon(
+                          Icons.monetization_on,
+                          color: Colors.white,
                         )
                       : null,
                 ),
