@@ -34,8 +34,8 @@ class MarketModel {
     }
 
     if (hasNextPage) pageNumber++;
-    isLoading = false;
-    isLoadingDetails = false;
+    isFetching = false;
+    isFetchingMore = false;
   }
 }
 
@@ -61,7 +61,7 @@ class SymbolContent {
         }
       },
     );
-    isLoading = false;
-    isLoadingDetails = false;
+    isFetching = false;
+    isFetchingDetails = false;
   }
 }

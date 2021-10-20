@@ -31,7 +31,7 @@ class _MarketsListState extends State<MarketsList> {
                   print('at the top');
                 } else {
                   if (hasNextPage) {
-                    isLoading = true;
+                    isFetchingMore = true;
                     setState(() {});
                   }
                   print('at the bottom');
@@ -39,27 +39,26 @@ class _MarketsListState extends State<MarketsList> {
               }
               return true;
             },
-            child: AbsorbPointer(
-              absorbing: isLoading,
-              child: Stack(
-                children: [
-                  ListView(
-                    children: [
-                      ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            color: const Color(0xFF323232),
-                            elevation: 8,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            child:
-                                StatefulBuilder(builder: (context, setState) {
-                              return ListTile(
+            child: StatefulBuilder(builder: (context, setState) {
+              return AbsorbPointer(
+                absorbing: isFetching || isFetchingMore || isFetchingDetails,
+                child: Stack(
+                  children: [
+                    ListView(
+                      children: [
+                        ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: const Color(0xFF323232),
+                              elevation: 8,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: ListTile(
                                 onTap: () async {
                                   tappedIndex = index;
-                                  isLoadingDetails = true;
+                                  isFetchingDetails = true;
                                   setState(() {});
                                   await widget.apiCall
                                       .fetchSymbolContent(index);
@@ -71,7 +70,7 @@ class _MarketsListState extends State<MarketsList> {
                                   setState(() {});
                                 },
                                 leading:
-                                    (isLoadingDetails && tappedIndex == index)
+                                    (isFetchingDetails && tappedIndex == index)
                                         ? SizedBox(
                                             height: 40,
                                             width: 40,
@@ -84,33 +83,33 @@ class _MarketsListState extends State<MarketsList> {
                                 title: Text(content[index]['symbol']),
                                 trailing:
                                     Text(content[index]['price'].toString()),
-                              );
-                            }),
-                          );
-                        },
-                        itemCount: content.length,
-                      ),
-                      if (hasNextPage)
-                        SizedBox(
-                            height: 40,
-                            child: (isLoading && hasNextPage)
-                                ? bottomLoadingIndicator()
-                                : null),
-                    ],
-                  ),
-                  if (isLoading)
-                    ColoredBox(
-                      color: Colors.grey.shade900.withOpacity(0.2),
-                      child: Center(
-                        child: SpinKitThreeBounce(
-                          color: Colors.white,
-                          size: 30,
+                              ),
+                            );
+                          },
+                          itemCount: content.length,
+                        ),
+                        if (hasNextPage)
+                          SizedBox(
+                              height: 40,
+                              child: (isFetchingMore && hasNextPage)
+                                  ? bottomLoadingIndicator()
+                                  : null),
+                      ],
+                    ),
+                    if (isFetching || isFetchingMore)
+                      ColoredBox(
+                        color: Colors.grey.shade900.withOpacity(0.2),
+                        child: Center(
+                          child: SpinKitThreeBounce(
+                            color: Colors.white,
+                            size: 30,
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            }),
           );
         } else if (snapshot.hasError) {
           return Center(child: (Text('${snapshot.error}')));

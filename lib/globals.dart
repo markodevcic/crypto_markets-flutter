@@ -16,6 +16,8 @@ late bool hasNextPage = false;
 
 late int tappedIndex;
 
-bool isLoading = false;
+bool isFetching = false;
 
-bool isLoadingDetails = false;
+bool isFetchingMore = false;
+
+bool isFetchingDetails = false;

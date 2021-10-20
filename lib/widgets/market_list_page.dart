@@ -35,7 +35,7 @@ class _MarketListPageState extends State<MarketListPage> {
                       : showTextFieldIcons = true;
                   pageNumber = 1;
                   searchText = value;
-                  isLoading = true;
+                  isFetching = true;
                   setState(() {});
                 },
                 textAlign: TextAlign.center,
@@ -59,7 +59,7 @@ class _MarketListPageState extends State<MarketListPage> {
                           ),
                           onPressed: () {
                             controller.clear();
-                            isLoading = true;
+                            isFetching = true;
                             searchText = '';
                             pageNumber = 1;
                             showTextFieldIcons = false;
@@ -69,8 +69,9 @@ class _MarketListPageState extends State<MarketListPage> {
                         )
                       : null,
                   suffixIcon: (showTextFieldIcons)
-                      ? const Icon(
-                          Icons.monetization_on,
+                      ? IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.monetization_on),
                           color: Colors.white,
                         )
                       : null,

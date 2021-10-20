@@ -10,7 +10,7 @@ class ApiCall {
   Future<MarketModel> searchMethod() {
     if (searchText.isNotEmpty) {
       switchApiCall = true;
-      return searchMarketData();
+      return fetchMarketData();
     } else if (searchText.isEmpty) {
       if (switchApiCall) {
         content = [];
@@ -28,24 +28,6 @@ class ApiCall {
         pageNumber.toString() +
         '&page_size=30';
     print('Fetch market url: $url');
-
-    var response = await get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var decodedJson = json.decode(response.body);
-
-      return MarketModel.fromJson(decodedJson);
-    }
-    throw Exception('Failed to search Crypto Markets with status code ' +
-        response.statusCode.toString());
-  }
-
-  Future<MarketModel> searchMarketData() async {
-    var url = kApiSearchParameter +
-        searchText +
-        kApiPageNumber +
-        pageNumber.toString() +
-        '&page_size=30';
-    print('Search market: $url');
 
     var response = await get(Uri.parse(url));
     if (response.statusCode == 200) {
