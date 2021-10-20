@@ -3,18 +3,18 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:crypto_markets/models/market_model.dart';
-import '../constants.dart';
-import '../globals.dart';
+import 'api_call_constants.dart';
+import '../../globals.dart';
 
 class ApiCall {
   Future<MarketModel> searchMethod() {
     if (searchText.isNotEmpty) {
-      switchApiCall = true;
+      isInSearchField = true;
       return fetchMarketData();
     } else if (searchText.isEmpty) {
-      if (switchApiCall) {
+      if (isInSearchField) {
         content = [];
-        switchApiCall = false;
+        isInSearchField = false;
       }
       return fetchMarketData();
     }
@@ -22,16 +22,19 @@ class ApiCall {
   }
 
   Future<MarketModel> fetchMarketData() async {
-    var url = kApiSearchParameter +
+    final url = kUrl +
+        kQuerySearchText +
         searchText +
-        kApiPageNumber +
+        kQueryPageNumber +
         pageNumber.toString() +
         '&page_size=30';
-    print('Fetch market url: $url');
 
-    var response = await get(Uri.parse(url));
+    final response =
+        await get(Uri.parse(url)).timeout(Duration(seconds: 5), onTimeout: () {
+      throw 'Connection timeout';
+    });
     if (response.statusCode == 200) {
-      var decodedJson = json.decode(response.body);
+      final decodedJson = json.decode(response.body);
 
       return MarketModel.fromJson(decodedJson);
     }
@@ -40,12 +43,14 @@ class ApiCall {
   }
 
   Future<SymbolContent> fetchSymbolContent(index) async {
-    var symbolUrl = kApi + content[index]['symbol'];
-    print('Symbol url: $symbolUrl');
+    final symbolUrl = kUrl + content[index]['symbol'];
 
-    var symbolResponse = await get(Uri.parse(symbolUrl));
+    final symbolResponse = await get(Uri.parse(symbolUrl))
+        .timeout(Duration(seconds: 5), onTimeout: () {
+      throw 'Connection timeout';
+    });
     if (symbolResponse.statusCode == 200) {
-      var symbolDecodedJson = json.decode(symbolResponse.body);
+      final symbolDecodedJson = json.decode(symbolResponse.body);
 
       return SymbolContent.fromJson(symbolDecodedJson);
     }

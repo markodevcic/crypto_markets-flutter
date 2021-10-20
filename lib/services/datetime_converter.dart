@@ -2,19 +2,19 @@ import 'package:intl/intl.dart';
 
 class Converter {
   String dateTimeConvert(value) {
-    var dateTimeParsed = DateTime.parse(value);
-    var dateName = DateFormat.MMMM().format(dateTimeParsed);
-    var dateFormat = DateFormat('dd yyyy');
-    var timeFormat = DateFormat('HH:mm:ss');
-    var outputDate = dateFormat.format(dateTimeParsed);
-    var outputTime = timeFormat.format(dateTimeParsed);
-    var time = '$dateName $outputDate $outputTime';
+    final dateTimeParsed = DateTime.parse(value);
+    final dateName = DateFormat.MMMM().format(dateTimeParsed);
+    final dateFormat = DateFormat('dd yyyy');
+    final timeFormat = DateFormat('HH:mm:ss');
+    final outputDate = dateFormat.format(dateTimeParsed);
+    final outputTime = timeFormat.format(dateTimeParsed);
+    final time = '$dateName $outputDate $outputTime';
 
     return time;
   }
 
   String decimalPlaceFormat(value) {
-    var formatter = NumberFormat('###,##0.00######').format(value);
+    final formatter = NumberFormat('###,##0.00######').format(value);
 
     return formatter;
   }

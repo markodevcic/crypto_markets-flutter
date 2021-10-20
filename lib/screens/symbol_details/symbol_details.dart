@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../globals.dart';
+import '../../globals.dart';
 
 class DetailsPage extends StatelessWidget {
   final int index;

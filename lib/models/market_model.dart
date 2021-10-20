@@ -3,9 +3,9 @@ import 'package:crypto_markets/services/datetime_converter.dart';
 import '../globals.dart';
 
 class MarketModel {
-  late List marketContent;
-  late bool nextPage;
-  late int numberOfItems;
+  late final List marketContent;
+  late final bool nextPage;
+  late final int numberOfItems;
 
   MarketModel(
     this.marketContent,
@@ -20,12 +20,10 @@ class MarketModel {
 
     itemsNumber = numberOfItems;
     hasNextPage = nextPage;
-    print(itemsNumber);
-    print(pageNumber);
 
-    if (switchApiCall && pageNumber == 1) {
+    if (isInSearchField && pageNumber == 1) {
       content = [];
-    } else if (switchApiCall && itemsNumber < (pageNumber - 1) * 30) {
+    } else if (isInSearchField && itemsNumber < (pageNumber - 1) * 30) {
       content = [];
     }
 
@@ -40,10 +38,10 @@ class MarketModel {
 }
 
 class SymbolContent {
-  Converter converter = Converter();
+  final Converter converter = Converter();
 
   SymbolContent.fromJson(Map<String, dynamic> json) {
-    Map tempSymbolContent = json['content'];
+    final Map tempSymbolContent = json['content'];
 
     tempSymbolContent.forEach(
       (k, v) {

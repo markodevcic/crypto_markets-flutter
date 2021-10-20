@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'markets_list.dart';
 import 'package:crypto_markets/globals.dart';
-import 'package:crypto_markets/widgets/components/markets_list.dart';
 
-class MarketListPage extends StatefulWidget {
-  MarketListPage({Key? key}) : super(key: key);
+class MarketSearch extends StatefulWidget {
+  MarketSearch({Key? key}) : super(key: key);
 
   static const String id = 'MarketListPage';
 
   @override
-  State<MarketListPage> createState() => _MarketListPageState();
+  State<MarketSearch> createState() => _MarketSearchState();
 }
 
-class _MarketListPageState extends State<MarketListPage> {
-  bool showSearchTextField = false;
+class _MarketSearchState extends State<MarketSearch> {
   bool showTextFieldIcons = false;
   final TextEditingController controller = TextEditingController();
 

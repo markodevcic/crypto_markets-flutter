@@ -1,10 +1,10 @@
+import 'package:crypto_markets/screens/symbol_details/symbol_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:crypto_markets/models/market_model.dart';
-import 'package:crypto_markets/services/api_call.dart';
+import 'package:crypto_markets/services/api_call/api_call.dart';
 import 'package:crypto_markets/globals.dart';
-import '../details_page.dart';
 import 'bottom_loading_indicator.dart';
 
 class MarketsList extends StatefulWidget {

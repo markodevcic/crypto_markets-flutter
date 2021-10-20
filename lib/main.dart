@@ -1,6 +1,5 @@
+import 'package:crypto_markets/screens/market_search/market_search.dart';
 import 'package:flutter/material.dart';
-
-import 'package:crypto_markets/widgets/market_list_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       //   MarketsList.id: (context) => MarketsList(),
       //   DetailsPage.id: (context) => DetailsPage(tappedIndex),
       // },
-      home: MarketListPage(),
+      home: MarketSearch(),
     );
   }
 }
